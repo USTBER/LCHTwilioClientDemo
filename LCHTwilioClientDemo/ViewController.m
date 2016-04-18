@@ -35,6 +35,8 @@
 - (void)handleHangUpButton:(UIButton *)sender;
 
 - (void)showAlertActionWithMessage:(NSString *)message;
+
+- (void)showAlertActionToDesideHangUp;
 @end
 
 #define WeakSelf(weakSelf) __weak typeof(self) weakSelf = self
@@ -47,7 +49,8 @@ static CGFloat const kTextViewHeight = 40.f;
 static CGFloat const kButtonWidth = 150.f;
 static CGFloat const kButtonHeight = 45.f;
 static CGFloat const kPadding = 20.f;
-static NSString *const kServerTokenURL = @"http://adadmin-dev.hadobi.com/hmtwilio/token?client=Jack&allowOutgoing=true";
+//static NSString *const kServerTokenURL = @"http://adadmin-dev.hadobi.com/hmtwilio/token?client=Jack&allowOutgoing=true";
+static NSString *const kServerTokenURL = @"http://confcallserver.herokuapp.com/token?client=Jack&allowOutgoing=true";
 
 @implementation ViewController
 
@@ -113,6 +116,7 @@ static NSString *const kServerTokenURL = @"http://adadmin-dev.hadobi.com/hmtwili
         return _httpSessionManager;
     }
     _httpSessionManager = [AFHTTPSessionManager manager];
+    _httpSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     return _httpSessionManager;
 }
 
@@ -193,13 +197,13 @@ static NSString *const kServerTokenURL = @"http://adadmin-dev.hadobi.com/hmtwili
         }
         NSString *capabilityToken = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
+        self.connection = [self.device connect:nil delegate:nil];
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"连接失败");
         
-        NSString *capabilityToken = @"";
-        self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
+        [self showAlertActionWithMessage:@"连接失败，无法服务"];
     }];
 }
 
@@ -219,6 +223,28 @@ static NSString *const kServerTokenURL = @"http://adadmin-dev.hadobi.com/hmtwili
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+
+/**
+ *  显示用于决定是否挂断当前电话的AlertController
+ */
+- (void)showAlertActionToDesideHangUp{
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.connection disconnect];
+    }];
+    
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认挂断" message:@"当前正在通话中，确定挂断吗？" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:okAction];
+    [alertController addAction:cancleAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    
+}
+
 /**
  *  处理拨号按钮的响应事件
  *
@@ -228,7 +254,7 @@ static NSString *const kServerTokenURL = @"http://adadmin-dev.hadobi.com/hmtwili
     LogFuncName;
     
     if(self.device.state == TCDeviceStateBusy){
-        [self showAlertActionWithMessage:@"已经处于通话状态，请挂断后再拨"];
+        [self showAlertActionWithMessage:@"正在通话中，请挂断再拨"];
         return;
     }
     if(self.device.state == TCDeviceStateOffline){
@@ -256,7 +282,9 @@ static NSString *const kServerTokenURL = @"http://adadmin-dev.hadobi.com/hmtwili
  */
 - (void)handleHangUpButton:(UIButton *)sender{
     LogFuncName;
-    [self.connection disconnect];
+    if(self.device.state == TCDeviceStateBusy){
+        [self showAlertActionToDesideHangUp];
+    }
 }
 
 #pragma TCDeviceDelegate协议
