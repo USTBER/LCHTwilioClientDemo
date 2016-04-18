@@ -14,6 +14,7 @@
 		181F560C1CC46D2A00DE7EB6 /* LCHTwilioClientDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 181F560A1CC46D2A00DE7EB6 /* LCHTwilioClientDemo.xcdatamodeld */; };
 		181F560E1CC46D2A00DE7EB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181F560D1CC46D2A00DE7EB6 /* Assets.xcassets */; };
 		181F56111CC46D2A00DE7EB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 181F560F1CC46D2A00DE7EB6 /* LaunchScreen.storyboard */; };
+		7B41275E92A5945B3CA40416 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF2F34D6846377D2FA41943E /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,9 @@
 		181F560D1CC46D2A00DE7EB6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		181F56101CC46D2A00DE7EB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		181F56121CC46D2A00DE7EB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C39B14A486F0152AE7B9CD33 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E68F619F353F09D2C4B6F417 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EF2F34D6846377D2FA41943E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B41275E92A5945B3CA40416 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +51,8 @@
 			children = (
 				181F55FD1CC46D2A00DE7EB6 /* LCHTwilioClientDemo */,
 				181F55FC1CC46D2A00DE7EB6 /* Products */,
+				BF55C99DE4E3FB9904005DD8 /* Pods */,
+				712A76784CF558A62A4CB796 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,6 +89,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		712A76784CF558A62A4CB796 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF2F34D6846377D2FA41943E /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF55C99DE4E3FB9904005DD8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C39B14A486F0152AE7B9CD33 /* Pods.debug.xcconfig */,
+				E68F619F353F09D2C4B6F417 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -89,9 +113,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 181F56151CC46D2A00DE7EB6 /* Build configuration list for PBXNativeTarget "LCHTwilioClientDemo" */;
 			buildPhases = (
+				B9EB82A2D57C7398EBC39707 /* Check Pods Manifest.lock */,
 				181F55F71CC46D2A00DE7EB6 /* Sources */,
 				181F55F81CC46D2A00DE7EB6 /* Frameworks */,
 				181F55F91CC46D2A00DE7EB6 /* Resources */,
+				D168A3B93F48EC7F322D2F13 /* Embed Pods Frameworks */,
+				C92BC222C4D247BF3179C9B7 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -146,6 +173,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B9EB82A2D57C7398EBC39707 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C92BC222C4D247BF3179C9B7 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D168A3B93F48EC7F322D2F13 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		181F55F71CC46D2A00DE7EB6 /* Sources */ = {
@@ -263,6 +338,7 @@
 		};
 		181F56161CC46D2A00DE7EB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C39B14A486F0152AE7B9CD33 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LCHTwilioClientDemo/Info.plist;
@@ -274,6 +350,7 @@
 		};
 		181F56171CC46D2A00DE7EB6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E68F619F353F09D2C4B6F417 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LCHTwilioClientDemo/Info.plist;
@@ -302,6 +379,7 @@
 				181F56171CC46D2A00DE7EB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
